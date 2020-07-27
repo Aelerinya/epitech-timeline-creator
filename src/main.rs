@@ -61,11 +61,10 @@ fn main() -> Result<(), EpitechClientError> {
 
         // For all projects, generate the timeline entry
         let date_formatter = Regex::new(r"^(\d+)-(\d+)-(\d+) .+$").unwrap();
-        let replacement = "start($3, $2, $1)";
         for project in projects {
             // Format dates correctly
-            let start_date = date_formatter.replace(&project.start, replacement);
-            let end_date = date_formatter.replace(&project.end, replacement);
+            let start_date = date_formatter.replace(&project.start, "start($3, $2, $1)");
+            let end_date = date_formatter.replace(&project.end, "end($3, $2, $1)");
             // Create the timeline entry
             println!(
                 "['{}', '{}', {}, {}],",
